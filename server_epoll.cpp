@@ -25,6 +25,7 @@ int main(int argc,char* argv[])
     int on = 1;
     epoll_event ev,events[EVENT_LEN];
     int event_num;
+    int backlog=10;
     // structure which to hold server address info
     // can be cast to sockaddr
     sockaddr_in server_addr,client_addr;
@@ -62,10 +63,18 @@ int main(int argc,char* argv[])
         line("failed to bind!\n");
         exit(-1);
     }
+
+    //listen
+    ret=listen(socket_fd,backlog);
+    if(ret==-1){
+        line("failed to listen!\n");
+        exit(-1);
+    }
     for(;;){
         //event_num is the amount of to-do events
         //events is the to-do events array EVENT_LEN is len of it
-        event_num=epoll_wait(epoll_fd,events,EVENT_LEN,500);
+        event_num=epoll_wait(epoll_fd,events,EVENT_LEN,5000);
+
         for(int i=0;i<event_num;i++){
             //this means accept new client
             if(events[i].data.fd==socket_fd){
