@@ -3,5 +3,5 @@ project(socket_demo)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(server_epoll server_epoll.cpp)
-add_executable(client_epoll client_epoll.cpp)
+add_executable(server_select server_select.cpp)
+add_executable(client_select client_select.cpp)
